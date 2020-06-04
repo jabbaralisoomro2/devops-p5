@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deployment-green
+  labels:
+    app: app-green
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: app-green
+  template:
+    metadata:
+      labels:
+        app: app-green
+    spec:
+      containers:
+      - name: capstone-devops
+        image: ajpm1977/capstone-devops:latest
+        ports:
+        - containerPort: 80
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: app-service
+spec:
+  selector:
+    app: app-green
+  ports:
+  - protocol: TCP
+    port: 80
+  type: LoadBalancer
+---
